@@ -1,0 +1,40 @@
+function findZeroSumSubarrays(arr) {
+  let n = arr.length;
+  let prefixSum = 0;
+  let map = new Map(); 
+  let result = [];
+
+  for (let i = 0; i < n; i++) {
+    prefixSum += arr[i];
+
+    if (prefixSum === 0) {
+      result.push([0, i]);
+    }
+
+    if (map.has(prefixSum)) {
+      let indices = map.get(prefixSum);
+      for (let idx of indices) {
+        result.push([idx + 1, i]); 
+      }
+    }
+
+    if (!map.has(prefixSum)) {
+      map.set(prefixSum, []);
+    }
+    map.get(prefixSum).push(i);
+  }
+
+  return result;
+}
+
+console.log(findZeroSumSubarrays([1, 2, -3, 3, -1, 2]));
+
+console.log(findZeroSumSubarrays([4, -1, -3, 1, 2, -1]));
+
+console.log(findZeroSumSubarrays([1, 2, 3, 4]));
+
+console.log(findZeroSumSubarrays([0, 0, 0]));
+
+console.log(findZeroSumSubarrays([-3, 1, 2, -3, 4, 0]));
+
+console.log(findZeroSumSubarrays([1, -1, 2, -2, 3, -3]));
