@@ -1,0 +1,36 @@
+function permuteUnique(s) {
+  const chars = s.split("").sort(); 
+  const used = new Array(chars.length).fill(false);
+  const result = [];
+
+  function backtrack(path) {
+    if (path.length === chars.length) {
+      result.push(path.join(""));
+      return;
+    }
+
+    for (let i = 0; i < chars.length; i++) {
+     
+      if (used[i]) continue;
+
+      if (i > 0 && chars[i] === chars[i - 1] && !used[i - 1]) continue;
+
+      used[i] = true;
+      path.push(chars[i]);
+
+      backtrack(path);
+
+      path.pop();
+      used[i] = false;
+    }
+  }
+
+  backtrack([]);
+  return result;
+}
+
+console.log(permuteUnique("abc"));  
+console.log(permuteUnique("aab"));  
+console.log(permuteUnique("aaa"));  
+console.log(permuteUnique("a"));    
+console.log(permuteUnique("abcd")); 
